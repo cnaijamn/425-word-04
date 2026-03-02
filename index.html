@@ -12,6 +12,10 @@
     .elt {
       cursor: pointer;
     }
+    .playing {
+      color: rgb(24, 15, 98);
+      font-weight: bold;
+    }
   </style>
   <script src="./audio/data.js"></script>
 </head>
@@ -24,6 +28,7 @@
   <script>
     const $list = document.getElementById('list');
     const audio = new Audio();
+    let $currLi = null;
 
     DATA.forEach(item => {
       const $li = document.createElement('li');
@@ -33,12 +38,28 @@
 
       $li.addEventListener('click', (e) => {
         if (e.target.tagName === 'LI') {
+          if ($currLi) {
+            $currLi.classList.remove('playing');
+          }
+          $currLi = $li;
+          $li.classList.add('playing');
+
           audio.src = `./audio/${item.id}.mp3`;
-        audio.play();
+          audio.currentTime = 0;
+          audio.play();
         }
       })
 
       $list.appendChild($li);
+    });
+
+    audio.addEventListener('ended', () => {
+      /*
+      if ($currLi) {
+        $currLi.classList.remove('playing');
+        $currLi = null;
+      }
+      */
     });
   </script>
 </body>
