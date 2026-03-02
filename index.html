@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>リハビリ自習(4)</title>
+  <style type="text/css">
+    .head {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    .elt {
+      cursor: pointer;
+    }
+  </style>
+  <script src="./audio/data.js"></script>
+</head>
+<body>
+  <div class="head">SLTA 「文の復唱」</div>
+  <div>
+    <ul id="list"></ul>
+  </div>
+
+  <script>
+    const $list = document.getElementById('list');
+    const audio = new Audio();
+
+    DATA.forEach(item => {
+      const $li = document.createElement('li');
+      $li.textContent = `${item.id} : ${item.text}`;
+      $li.classList.add('elt');
+      $li.dataset.id = item.id;
+
+      $li.addEventListener('click', (e) => {
+        if (e.target.tagName === 'LI') {
+          audio.src = `./audio/${item.id}.mp3`;
+        audio.play();
+        }
+      })
+
+      $list.appendChild($li);
+    });
+  </script>
+</body>
+</html>
